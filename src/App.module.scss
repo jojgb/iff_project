@@ -1,29 +1,12 @@
 $primary-color: #4caf50;
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  //   display: flex;
+  //   flex-direction: column; /* Menyusun elemen secara vertikal */
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  max-width: 81rem;
+  margin: 0 auto;
+  //   background-color: $primary-color;
   height: 100vh;
-  background-color: $primary-color;
-  color: white;
-
-  .title {
-    font-size: 2rem;
-    font-weight: bold;
-  }
-
-  .button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: darken($primary-color, 10%);
-    color: white;
-    cursor: pointer;
-
-    &:hover {
-      background-color: lighten($primary-color, 10%);
-    }
-  }
 }

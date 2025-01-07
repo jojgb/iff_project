@@ -1,12 +1,13 @@
-import "./App.css";
+// import "./App.css";
+import styles from "./App.module.scss";
 import Navbar from "./components/navbar";
 
 function App() {
   return (
-    <>
+    <div className={styles.container}>
       <Navbar />
-      <div className="bg-blue-500 text- p-4 rounded">Hello, Tailwind!</div>
-    </>
+      ini content
+    </div>
   );
 }
 
