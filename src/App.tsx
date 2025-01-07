@@ -1,9 +1,11 @@
 import "./App.css";
+import Navbar from "./components/navbar";
 
 function App() {
   return (
     <>
-      <div className="bg-blue-500 text-white p-4 rounded">Hello, Tailwind!</div>
+      <Navbar />
+      <div className="bg-blue-500 text- p-4 rounded">Hello, Tailwind!</div>
     </>
   );
 }
