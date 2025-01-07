@@ -14,7 +14,7 @@ export const arrowDownImage = <img src={arrowDownLogo} alt="arrow down Logo" />;
 
 export const HomeSection = () => {
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 border border-orange-400 p-4 rounded-md">
       <div>{homeImage}</div>
       <div className="text-sm">{"Back To Homepage"}</div>
     </div>

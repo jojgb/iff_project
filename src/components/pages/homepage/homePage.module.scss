@@ -1,0 +1,19 @@
+$font-color: #617170;
+$font-color-h1: #001e1d;
+
+.tabSection {
+  color: $font-color;
+  margin-top: 1.5rem;
+}
+
+.midSection {
+  color: $font-color;
+  margin-top: 4.5rem;
+}
+.midSection h1 {
+  color: $font-color-h1;
+}
+
+.cardSection {
+  margin-top: 1.5rem;
+}
