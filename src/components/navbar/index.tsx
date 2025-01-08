@@ -8,6 +8,7 @@ import {
 } from "../../image";
 import styles from "../../App.module.scss";
 import Drawer from "../drawer";
+import FinancialModal from "../modal/financialModal";
 
 interface NavbarProps {
   className?: string;
@@ -51,6 +52,7 @@ const mockCartData = [
 
 const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isFinancialModalOpen, setIsFinancialModalOpen] = useState(false);
   const [cartData, setCartData] = useState(mockCartData);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
@@ -130,8 +132,11 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
             <NavItem child={<HomeSection />} href="/" className={fontColor} />
             <NavItem
               child={<CartSection />}
-              className={fontColor}
-              onClick={toggleDrawer}
+              className={`${fontColor} cursor-pointer`}
+              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                e.preventDefault();
+                toggleDrawer();
+              }}
             />
           </div>
         </ul>
@@ -256,7 +261,13 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
                   <p>10,100,000.00</p>
                 </div>
                 <div className="mt-4 ">
-                  <button className={`${styles.nextButton} w-full`}>
+                  <button
+                    className={`${styles.nextButton} w-full`}
+                    onClick={() => {
+                      setIsDrawerOpen(false);
+                      setIsFinancialModalOpen(true);
+                    }}
+                  >
                     Checkout
                   </button>
                 </div>
@@ -265,6 +276,11 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
           )}
         </div>
       </Drawer>
+      <FinancialModal
+        onClose={() => setIsFinancialModalOpen(false)}
+        onApply={() => setIsFinancialModalOpen(false)}
+        isVisible={isFinancialModalOpen}
+      />
     </div>
   );
 };

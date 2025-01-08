@@ -4,7 +4,7 @@ interface NavItemProps {
   child?: ReactNode;
   href?: string;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 const NavItem: FunctionComponent<NavItemProps> = ({
