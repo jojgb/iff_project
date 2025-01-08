@@ -119,7 +119,7 @@ const Periperal: FunctionComponent<PeriperalProps> = () => {
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-4 gap-6 mb-12">
+      <div className="grid grid-cols-4 gap-6 pb-12">
         {products.map((product) => (
           <div
             key={product.id}

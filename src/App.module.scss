@@ -1,4 +1,6 @@
 $primary-color: #f58220;
+$backGroundColorProductSelected: #f2f2f2;
+$borderColor: #e6e6e6;
 
 .container {
   //   display: flex;
@@ -35,4 +37,15 @@ $primary-color: #f58220;
     outline: none;
     box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.5); /* Ring oranye */
   }
+}
+
+.productSelected {
+  border-radius: 0.75rem;
+  border-color: $borderColor;
+  background-color: $backGroundColorProductSelected;
+}
+
+.nextButton {
+  background-color: $primary-color;
+  color: white;
 }
