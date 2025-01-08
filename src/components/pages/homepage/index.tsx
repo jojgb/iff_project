@@ -12,6 +12,7 @@ interface HomePageProps {
 
 const HomePage: FunctionComponent<HomePageProps> = () => {
   const [needSelected, setNeedSelected] = useState<string>("");
+
   const handleCategoryClick = (category: string) => {
     setNeedSelected(category);
     console.log(`Selected category: ${category}`);
@@ -77,7 +78,7 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
         {!needSelected ? <Card onClick={handleCategoryClick} /> : null}
       </section>
       {/* sort and list section  */}
-      <div className="mt-8">{renderChildList}</div>
+      <div className="mt-8">{renderChildList}</div>å
     </div>
   );
 };

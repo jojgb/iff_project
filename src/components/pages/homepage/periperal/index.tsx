@@ -1,6 +1,7 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { orangeCartImage } from "../../../../image";
 import styles from "./periperal.module.scss";
+import DropDownSortModal from "../../../modal/dropDownSortModal";
 
 interface PeriperalProps {
   className?: string;
@@ -80,10 +81,17 @@ const products = [
 ];
 
 const Periperal: FunctionComponent<PeriperalProps> = () => {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const [selectedSortOption, setSelectedSortOption] =
+    useState<string>("High price");
+
+  const handleSortClick = () => {
+    setIsModalVisible(true); // Open modal
+  };
+
   return (
-    <div
-    // className={styles.periperalSection}
-    >
+    <div>
       {/* Sub Category Section */}
       <div className="flex gap-4 mb-6 items-start">
         <button className={styles.subCategory}>Device</button>
@@ -101,10 +109,12 @@ const Periperal: FunctionComponent<PeriperalProps> = () => {
         />
         <div className="flex items-center gap-2">
           <span>Sort by</span>
-          <select className="border border-gray-300 rounded-md p-2">
-            <option>Low Price</option>
-            <option>High Price</option>
-          </select>
+          <button
+            className="border border-gray-300 rounded-md p-2 flex items-center"
+            onClick={handleSortClick}
+          >
+            <span>{selectedSortOption}</span>
+          </button>
         </div>
       </div>
 
@@ -141,6 +151,11 @@ const Periperal: FunctionComponent<PeriperalProps> = () => {
           </div>
         ))}
       </div>
+      <DropDownSortModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onChange={(category) => setSelectedSortOption(category)}
+      />
     </div>
   );
 };
