@@ -74,7 +74,7 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
       </section>
       {/* card section  */}
       <section className={styles.cardSection}>
-        <Card onClick={handleCategoryClick} />
+        {!needSelected ? <Card onClick={handleCategoryClick} /> : null}
       </section>
       {/* sort and list section  */}
       <div className="mt-8">{renderChildList}</div>
