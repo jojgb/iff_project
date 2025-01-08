@@ -1,6 +1,10 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useMemo, useState } from "react";
 import styles from "./homePage.module.scss";
 import Card from "./card";
+import Periperal from "./periperal";
+import Printing from "./printing";
+import Stationary from "./stationary";
+import Merchandise from "./merchandise";
 
 interface HomePageProps {
   className?: string;
@@ -12,6 +16,28 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
     setNeedSelected(category);
     console.log(`Selected category: ${category}`);
   };
+
+  const renderChildList = useMemo(() => {
+    switch (needSelected) {
+      case "IT - PERIPERAL":
+        return <Periperal />;
+      case "PRINTING":
+        return <Printing />;
+      case "STATIONARY":
+        return <Stationary />;
+      case "MERCHANDISE":
+        return <Merchandise />;
+      default:
+        return (
+          <div>
+            <h1>Select what you need here</h1>
+            <p className="mt-4">
+              Select your needs based on the categories below
+            </p>
+          </div>
+        );
+    }
+  }, [needSelected]);
 
   return (
     <div>
@@ -26,10 +52,22 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
       {/* mid Section  */}
       <section className={styles.midSection}>
         <div>
-          <h1>E-Catalogue</h1>
+          {/* Breadcrumb */}
+          <nav className={styles.breadcrumb} aria-label="breadcrumb">
+            <ol className="flex gap-2 text-sm">
+              {needSelected && (
+                <>
+                  <li className="text-orange-500">Home</li>
+                  <span className="text-gray-400">{">"}</span>
+                  <li className="font-medium">{needSelected}</li>
+                </>
+              )}
+            </ol>
+          </nav>
+          <p className={styles.midSectionTitle}>E-Catalogue</p>
           {needSelected ? (
-            <div>
-              <h1>{needSelected}</h1>
+            <div className={styles.textMidSection}>
+              <p>{needSelected}</p>
             </div>
           ) : (
             <div>
@@ -45,6 +83,8 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
       <section className={styles.cardSection}>
         <Card onClick={handleCategoryClick} />
       </section>
+      {/* sort and list section  */}
+      <div className="mt-8">{renderChildList}</div>
     </div>
   );
 };

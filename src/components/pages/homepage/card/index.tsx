@@ -16,26 +16,26 @@ const Card: FunctionComponent<CardProps> = ({ onClick }) => {
     }
   };
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 cursor-pointer">
       <img
         src={periperalImage}
         alt="periperal"
-        onClick={() => handleClick("Peripheral")}
+        onClick={() => handleClick("IT - PERIPERAL")}
       />
       <img
         src={printingImage}
         alt="printing"
-        onClick={() => handleClick("Printing")}
+        onClick={() => handleClick("PRINTING")}
       />
       <img
         src={stationaryImage}
         alt="stationary"
-        onClick={() => handleClick("Stationary")}
+        onClick={() => handleClick("STATIONARY")}
       />
       <img
         src={merchandiseImage}
         alt="merchandise"
-        onClick={() => handleClick("Merchandise")}
+        onClick={() => handleClick("MERCHANDISE")}
       />
     </div>
   );

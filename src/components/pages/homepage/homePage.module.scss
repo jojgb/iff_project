@@ -9,11 +9,28 @@ $font-color-h1: #001e1d;
 .midSection {
   color: $font-color;
   margin-top: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.midSection h1 {
+.midSectionTitle {
   color: $font-color-h1;
+  font-size: 3rem;
+  font-weight: 700;
+}
+.textMidSection {
+  color: $font-color-h1;
+  font-weight: 400;
+  font-size: 2.5rem;
 }
 
 .cardSection {
   margin-top: 1.5rem;
+}
+.breadcrumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
 }
