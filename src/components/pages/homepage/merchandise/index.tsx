@@ -154,7 +154,9 @@ const Merchandise: FunctionComponent<MerchandiseProps> = () => {
       <DropDownSortModal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        onChange={(category) => setSelectedSortOption(category)}
+        onApply={(category) => {
+          setSelectedSortOption(category);
+        }}
       />
     </div>
   );

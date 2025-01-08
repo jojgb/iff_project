@@ -154,7 +154,9 @@ const Stationary: FunctionComponent<StationaryProps> = () => {
       <DropDownSortModal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        onChange={(category) => setSelectedSortOption(category)}
+        onApply={(category) => {
+          setSelectedSortOption(category);
+        }}
       />
     </div>
   );

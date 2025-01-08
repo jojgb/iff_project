@@ -4,7 +4,7 @@ import styles from "./modal.module.scss";
 interface DropDownSortModalProps {
   isVisible: boolean;
   onClose: () => void;
-  onChange?: (category: string) => void;
+  onApply?: (category: string) => void;
 }
 
 const SORT_OPTIONS = ["High price", "Low price", "Latest", "Oldest"];
@@ -12,7 +12,7 @@ const SORT_OPTIONS = ["High price", "Low price", "Latest", "Oldest"];
 const DropDownSortModal: React.FC<DropDownSortModalProps> = ({
   isVisible,
   onClose,
-  onChange,
+  onApply,
 }) => {
   const [selectedSortOption, setSelectedSortOption] =
     useState<string>("High price");
@@ -32,12 +32,12 @@ const DropDownSortModal: React.FC<DropDownSortModalProps> = ({
   if (!isVisible) return null;
 
   const handleSortChange = (option: string) => {
-    setSelectedSortOption(option);
-    onChange?.(option);
+    setSelectedSortOption(option); // Update selected option in modal
   };
 
   const handleApplyButton = () => {
-    onClose();
+    onApply?.(selectedSortOption); // Send the selected option to the parent
+    onClose(); // Close the modal
   };
 
   return (
