@@ -78,7 +78,7 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
         {!needSelected ? <Card onClick={handleCategoryClick} /> : null}
       </section>
       {/* sort and list section  */}
-      <div className="mt-8">{renderChildList}</div>å
+      <div className="mt-8">{renderChildList}</div>
     </div>
   );
 };

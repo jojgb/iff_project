@@ -1,4 +1,4 @@
-$primary-color: #4caf50;
+$primary-color: #f58220;
 
 .container {
   //   display: flex;
@@ -9,4 +9,30 @@ $primary-color: #4caf50;
   margin: 0 auto;
   //   background-color: $primary-color;
   height: 100vh;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  background-color: white;
+  border: 2px solid $primary-color; /* Warna oranye */
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+
+  &:checked::before {
+    content: "✓"; /* Tanda centang */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    color: $primary-color; /* Warna oranye untuk tanda centang */
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.5); /* Ring oranye */
+  }
 }
