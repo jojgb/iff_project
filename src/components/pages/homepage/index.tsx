@@ -28,14 +28,7 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
       case "MERCHANDISE":
         return <Merchandise />;
       default:
-        return (
-          <div>
-            <h1>Select what you need here</h1>
-            <p className="mt-4">
-              Select your needs based on the categories below
-            </p>
-          </div>
-        );
+        return;
     }
   }, [needSelected]);
 
