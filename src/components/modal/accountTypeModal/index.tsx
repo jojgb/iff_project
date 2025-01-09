@@ -13,7 +13,11 @@ const AccountTypeModal: FunctionComponent<AccountTypeModalProps> = ({
   onClose,
   onApply,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string>("Expense");
+  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filteredOptions, setFilteredOptions] =
+    useState<string[]>(accountTypeOption);
+
   useEffect(() => {
     if (isVisible) {
       document.body.style.overflow = "hidden";
@@ -26,6 +30,15 @@ const AccountTypeModal: FunctionComponent<AccountTypeModalProps> = ({
     };
   }, [isVisible]);
 
+  useEffect(() => {
+    // Filter opsi berdasarkan pencarian
+    setFilteredOptions(
+      accountTypeOption.filter((option) =>
+        option.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm]);
+
   if (!isVisible) return null;
 
   const handleChangeOption = (option: string) => {
@@ -36,16 +49,28 @@ const AccountTypeModal: FunctionComponent<AccountTypeModalProps> = ({
     onApply?.(selectedOption);
     onClose();
   };
+
   return (
     <div className={styles.modalBackdrop} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div>
           <h2 className="text-left">ACCOUNT TYPE</h2>
+
+          {/* Input Search */}
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full border border-gray-300 rounded-md px-2 py-1 mt-2 mb-4 h-12"
+          />
+
+          {/* List Options */}
           <div
             className="text-left ml-4 mt-4 cursor-pointer border-b border-gray-400 pb-4 overflow-y-scroll"
             style={{ height: "6.25rem" }}
           >
-            {accountTypeOption.map((option) => (
+            {filteredOptions.map((option) => (
               <p
                 key={option}
                 className={`mb-2 ${

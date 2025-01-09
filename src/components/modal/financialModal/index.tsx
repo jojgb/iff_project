@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "../../modal/dropDownSortModal/modal.module.scss";
-import { accountTypeOption } from "../../../constant";
 import AccountTypeModal from "../accountTypeModal";
 import { DropDownIcon } from "../../../image";
 
@@ -18,7 +17,7 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
   // account type
   const [isAccountTypeModalVisible, setIsAccountTypeModalVisible] =
     useState<boolean>(false);
-  const [accountType, setAccountType] = useState<string>("Expense");
+  const [accountType, setAccountType] = useState<string>("");
 
   // budget account
   //     const [isBudgetAccountModalVisible, setisBudgetAccountModalVisible] =
@@ -102,7 +101,9 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
                 className="border border-gray-300 rounded-md p-2 flex justify-between w-full bg-white"
                 onClick={() => setIsAccountTypeModalVisible(true)}
               >
-                <span>{accountTypeOption}</span>
+                <span className="text-sm">
+                  {accountType ? accountType : "Please Select"}
+                </span>
                 <DropDownIcon />
               </button>
             </div>
