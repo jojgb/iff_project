@@ -1,5 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "../../modal/dropDownSortModal/modal.module.scss";
+import { accountTypeOption } from "../../../constant";
+import AccountTypeModal from "../accountTypeModal";
+import { DropDownIcon } from "../../../image";
 
 interface FinancialModalProps {
   isVisible: boolean;
@@ -12,6 +15,24 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
   onClose,
   //   onApply,
 }) => {
+  // account type
+  const [isAccountTypeModalVisible, setIsAccountTypeModalVisible] =
+    useState<boolean>(false);
+  const [accountType, setAccountType] = useState<string>("Expense");
+
+  // budget account
+  //     const [isBudgetAccountModalVisible, setisBudgetAccountModalVisible] =
+  //     useState<boolean>(false);
+  //   const [budgetAccount, setBudgetAccount] = useState<string>("106101/OTHER RECEIVABLES");
+
+  const body = useMemo(() => {
+    return {
+      accountType,
+    };
+  }, [accountType]);
+
+  console.log(body);
+
   useEffect(() => {
     if (isVisible) {
       document.body.style.overflow = "hidden";
@@ -77,16 +98,13 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
               >
                 Account Type
               </label>
-              <select
-                id="accountType"
-                name="accountType"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              <button
+                className="border border-gray-300 rounded-md p-2 flex justify-between w-full bg-white"
+                onClick={() => setIsAccountTypeModalVisible(true)}
               >
-                <option value="">Select Account Type</option>
-                <option value="savings">Savings</option>
-                <option value="current">Current</option>
-                <option value="business">Business</option>
-              </select>
+                <span>{accountTypeOption}</span>
+                <DropDownIcon />
+              </button>
             </div>
             {/* budget account  */}
             <div>
@@ -176,6 +194,13 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
           </div>
         </div>
       </div>
+      <AccountTypeModal
+        isVisible={isAccountTypeModalVisible}
+        onClose={() => setIsAccountTypeModalVisible(false)}
+        onApply={(opt) => {
+          setAccountType(opt);
+        }}
+      />
     </div>
   );
 };
