@@ -1,0 +1,52 @@
+$primary-color: #f58220;
+$backGroundColorProductSelected: #f2f2f2;
+$borderColor: #e6e6e6;
+
+.container {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  max-width: 81rem;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  background-color: white;
+  border: 2px solid $primary-color;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+
+  &:checked::before {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    color: $primary-color;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.5);
+  }
+}
+
+.productSelected {
+  border-radius: 0.75rem;
+  border-color: $borderColor;
+  background-color: $backGroundColorProductSelected;
+}
+
+.nextButton {
+  background-color: $primary-color;
+  color: white;
+}
+
+.tab {
+  color: $primary-color;
+}

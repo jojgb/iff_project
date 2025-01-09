@@ -1,0 +1,21 @@
+$backGroundColor: #ffe8d4;
+$font-color: #f58220;
+$categoryBackGroundColor: #e6e6e6;
+
+.subCategory {
+  background-color: $backGroundColor;
+  padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+  margin-top: 1.5rem;
+  border-radius: 1rem;
+  color: $font-color;
+}
+
+.categoryText {
+  background-color: $categoryBackGroundColor;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  display: block;
+  width: fit-content;
+  white-space: nowrap;
+  text-align: left;
+}
