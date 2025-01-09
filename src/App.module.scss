@@ -3,13 +3,10 @@ $backGroundColorProductSelected: #f2f2f2;
 $borderColor: #e6e6e6;
 
 .container {
-  //   display: flex;
-  //   flex-direction: column; /* Menyusun elemen secara vertikal */
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   max-width: 81rem;
   margin: 0 auto;
-  //   background-color: $primary-color;
   height: 100vh;
 }
 
@@ -18,24 +15,24 @@ $borderColor: #e6e6e6;
   height: 20px;
   appearance: none;
   background-color: white;
-  border: 2px solid $primary-color; /* Warna oranye */
+  border: 2px solid $primary-color;
   border-radius: 4px;
   cursor: pointer;
   position: relative;
 
   &:checked::before {
-    content: "✓"; /* Tanda centang */
+    content: "✓";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1rem;
-    color: $primary-color; /* Warna oranye untuk tanda centang */
+    color: $primary-color;
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.5); /* Ring oranye */
+    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.5);
   }
 }
 
