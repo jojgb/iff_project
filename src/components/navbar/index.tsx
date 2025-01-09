@@ -12,45 +12,12 @@ import FinancialModal from "../modal/financialModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { removeSelectedFromCart, updateQuantity } from "../../redux/cartSlice";
+import { setFinancialData } from "../../redux/financialSlice";
 
 interface NavbarProps {
   className?: string;
   fontColor?: string;
 }
-
-//   {
-//     id: 1,
-//     name: "Product 1",
-//     price: 19.99,
-//     quantity: 2,
-//     image:
-//       "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//87/MTA-2733701/canon_canon-eos-750d-kamera-dslr_full05.jpg",
-//   },
-//   {
-//     id: 2,
-//     name: "Product 2",
-//     price: 9.99,
-//     quantity: 1,
-//     image:
-//       "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/9/23/efb94525-5e38-498c-b361-391d006b70be.png",
-//   },
-//   {
-//     id: 3,
-//     name: "Product 3",
-//     price: 14.99,
-//     quantity: 3,
-//     image:
-//       "https://i.pcmag.com/imagery/reviews/06MB2dd9IF24omR8kjqGL2v-4.fit_scale.size_1028x578.v1709768556.jpg",
-//   },
-//   {
-//     id: 4,
-//     name: "Product 4",
-//     price: 14.99,
-//     quantity: 2,
-//     image:
-//       "https://i.pcmag.com/imagery/reviews/06MB2dd9IF24omR8kjqGL2v-4.fit_scale.size_1028x578.v1709768556.jpg",
-//   },
-// ];
 
 const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
   const dispatch = useDispatch();
@@ -62,7 +29,8 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const carts = useSelector((state: RootState) => state.carts.items);
-  console.log({ carts });
+
+  const financialData = useSelector((state: RootState) => state.financial);
 
   const toggleDrawer = () => {
     setIsDrawerOpen((prev) => !prev);
@@ -130,7 +98,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
             <NavItem child={<HomeSection />} href="/" className={fontColor} />
             <NavItem
               child={CartSection(carts.length)}
-              className={`${fontColor} cursor-pointer`}
+              className={`${fontColor} cursor-pointer text-inherit no-underline hover:no-underline`}
               onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                 e.preventDefault();
                 toggleDrawer();
@@ -142,7 +110,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
       <Drawer isOpen={isDrawerOpen} onClose={toggleDrawer} width="w-[40%]">
         <div className="h-full overflow-auto pb-12">
           {carts.length === 0 ? (
-            <p>Your cart is empty.</p>
+            <p className="mt-4">Your cart is empty.</p>
           ) : (
             <div>
               {/* Select All Checkbox */}
@@ -276,7 +244,10 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
       </Drawer>
       <FinancialModal
         onClose={() => setIsFinancialModalOpen(false)}
-        onApply={() => setIsFinancialModalOpen(false)}
+        onApply={() => {
+          setIsFinancialModalOpen(false);
+          dispatch(setFinancialData(financialData));
+        }}
         isVisible={isFinancialModalOpen}
       />
     </div>

@@ -6,6 +6,7 @@ import DropDownSortModal from "../../../modal/dropDownSortModal";
 import styles from "./periperal.module.scss";
 import { orangeCartImage } from "../../../../image";
 import { addToCart } from "../../../../redux/cartSlice";
+
 interface Product {
   id: number | string;
   name: string;
@@ -14,21 +15,17 @@ interface Product {
   category: string;
   vendor: string;
 }
+
 const Periperal: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const [cartMessage, setCartMessage] = useState<string | null>(null);
-
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Tambahkan state untuk loading
   const products = useSelector((state: RootState) => state.products.products);
 
-  const carts = useSelector((state: RootState) => state.carts);
-  console.log({ carts });
-
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
   const [selectedSortOption, setSelectedSortOption] =
     useState<string>("High price");
-
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleAddToCart = (product: Product) => {
@@ -43,7 +40,6 @@ const Periperal: FunctionComponent = () => {
     );
 
     setCartMessage(`${product.name} added to cart!`);
-
     setTimeout(() => {
       setCartMessage(null);
     }, 3000);
@@ -51,15 +47,17 @@ const Periperal: FunctionComponent = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(
           "https://65519a4c5c69a7790328f2f2.mockapi.io/employee/listProduct"
         );
         const data = await response.json();
-        console.log({ data });
-        dispatch(setProducts(data)); // Simpan data produk ke Redux
+        dispatch(setProducts(data));
       } catch (error) {
         console.error("Failed to fetch products:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -100,7 +98,7 @@ const Periperal: FunctionComponent = () => {
 
   return (
     <div>
-      {/* cart message  */}
+      {/* Cart Message */}
       <div
         className={`${
           cartMessage ? "visible" : "invisible"
@@ -109,74 +107,86 @@ const Periperal: FunctionComponent = () => {
         {cartMessage}
       </div>
 
-      {/* Sub Category Section */}
-      <div className="flex gap-4 mb-6 items-start">
-        <button className={styles.subCategory}>Device</button>
-        <button className={styles.subCategory}>Sub Category</button>
-        <button className={styles.subCategory}>Sub Category</button>
-        <button className={styles.subCategory}>Sub Category</button>
-      </div>
-
-      {/* Search and Sort Section */}
-      <div className="flex justify-between items-center mb-6">
-        <input
-          type="text"
-          placeholder="Search item, vendor.."
-          className="border border-gray-300 rounded-md p-2 w-1/3"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-        <div className="flex items-center gap-2">
-          <span>Sort by</span>
-          <button
-            className="border border-gray-300 rounded-md p-2 flex items-center"
-            onClick={handleSortClick}
-          >
-            <span>{selectedSortOption}</span>
-          </button>
+      {/* Loading Indicator */}
+      {isLoading ? (
+        <div className="flex justify-center items-center h-screen">
+          <div className="loader">Loading .... </div>
         </div>
-      </div>
+      ) : (
+        <>
+          {/* Sub Category Section */}
+          <div className="flex gap-4 mb-6 items-start">
+            <button className={styles.subCategory}>Device</button>
+            <button className={styles.subCategory}>Sub Category</button>
+            <button className={styles.subCategory}>Sub Category</button>
+            <button className={styles.subCategory}>Sub Category</button>
+          </div>
 
-      {/* Products Grid */}
-      <div className="grid grid-cols-4 gap-6 pb-12">
-        {sortedProducts.map((product) => (
-          <div
-            key={product.id}
-            className="border border-gray-300 rounded-lg p-4 hover:shadow-lg transition"
-          >
-            <div className={`${styles.categoryText}`}>
-              <p className="text-gray-600 mb-2">{product.category}</p>
-            </div>
-            <div className="flex justify-between items-center mb-2">
-              <h3 className="font-semibold text-lg text-left mb-2">
-                {product.name}
-              </h3>
+          {/* Search and Sort Section */}
+          <div className="flex justify-between items-center mb-6">
+            <input
+              type="text"
+              placeholder="Search item, vendor.."
+              className="border border-gray-300 rounded-md p-2 w-1/3"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <div className="flex items-center gap-2">
+              <span>Sort by</span>
               <button
-                className="text-orange-50 py-2 px-4 flex items-center justify-center bg-white"
-                onClick={() => handleAddToCart(product)}
+                className="border border-gray-300 rounded-md p-2 flex items-center"
+                onClick={handleSortClick}
               >
-                {orangeCartImage}
+                <span>{selectedSortOption}</span>
               </button>
             </div>
-            <p className="text-gray-700 text-left mb-4">
-              {`IDR ${new Intl.NumberFormat("id-ID").format(
-                Number(product.price)
-              )}.00`}
-            </p>
-            <div className="mb-4">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-40 object-cover rounded-md"
-              />
-            </div>
-            <p className="text-gray-500 text-left text-sm mb-2">Vendor Name</p>
-            <p className="text-black font-bold text-sm text-left">
-              {product.vendor}
-            </p>
           </div>
-        ))}
-      </div>
+
+          {/* Products Grid */}
+          <div className="grid grid-cols-4 gap-6 pb-12">
+            {sortedProducts.map((product) => (
+              <div
+                key={product.id}
+                className="border border-gray-300 rounded-lg p-4 hover:shadow-lg transition"
+              >
+                <div className={`${styles.categoryText}`}>
+                  <p className="text-gray-600 mb-2">{product.category}</p>
+                </div>
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="font-semibold text-lg text-left mb-2">
+                    {product.name}
+                  </h3>
+                  <button
+                    className="text-orange-50 py-2 px-4 flex items-center justify-center bg-white"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    {orangeCartImage}
+                  </button>
+                </div>
+                <p className="text-gray-700 text-left mb-4">
+                  {`IDR ${new Intl.NumberFormat("id-ID").format(
+                    Number(product.price)
+                  )}.00`}
+                </p>
+                <div className="mb-4">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-40 object-cover rounded-md"
+                  />
+                </div>
+                <p className="text-gray-500 text-left text-sm mb-2">
+                  Vendor Name
+                </p>
+                <p className="text-black font-bold text-sm text-left">
+                  {product.vendor}
+                </p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
       <DropDownSortModal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}

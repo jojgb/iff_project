@@ -5,18 +5,25 @@ import { DropDownIcon } from "../../../image";
 import BudgetAccountModal from "../budgetAccountModal";
 import FixedAssetNumberModal from "../fixedAssetNumberModal";
 import TotalTaxGroupModal from "../totalTaxGroupModal";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setFinancialData } from "../../../redux/financialSlice";
 
 interface FinancialModalProps {
   isVisible: boolean;
   onClose: () => void;
-  onApply?: (category: string) => void;
+  onApply: (data: unknown) => void;
 }
 
 const FinancialModal: React.FC<FinancialModalProps> = ({
   isVisible,
   onClose,
-  //   onApply,
+  onApply,
 }) => {
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   // account type
   const [isAccountTypeModalVisible, setIsAccountTypeModalVisible] =
     useState<boolean>(false);
@@ -37,16 +44,17 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
     useState<boolean>(false);
   const [totalTaxGroup, setTotalTaxGroup] = useState<string>("");
 
+  const [orderDate, setOrderDate] = useState<string>("");
+
   const body = useMemo(() => {
     return {
       accountType,
       budgetAccount,
       fixedAssetNumber,
       totalTaxGroup,
+      orderDate,
     };
-  }, [accountType, budgetAccount, fixedAssetNumber, totalTaxGroup]);
-
-  console.log(body);
+  }, [accountType, budgetAccount, fixedAssetNumber, orderDate, totalTaxGroup]);
 
   useEffect(() => {
     if (isVisible) {
@@ -62,13 +70,11 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
 
   if (!isVisible) return null;
 
-  //   const handleSortChange = (option: string) => {
-  //     setSelectedSortOption(option); // Update selected option in modal
-  //   };
-
   const handleApplyButton = () => {
-    // onApply?.(selectedSortOption); // Send the selected option to the parent
-    onClose(); // Close the modal
+    onApply(body);
+    dispatch(setFinancialData(body)); // Dispatch data to Redux
+    onClose();
+    navigate("/myRequest"); // Navigate to the MyRequest page
   };
 
   return (
@@ -103,6 +109,8 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
                 id="orderDate"
                 name="orderDate"
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                value={orderDate}
+                onChange={(e) => setOrderDate(e.target.value)} // update order date
               />
             </div>
             {/* account type  */}

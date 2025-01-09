@@ -42,7 +42,7 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
         <div className="flex justify-center items-center gap-4 cursor-pointer">
           <p className={styles.tab}>Home</p>
           <p onClick={() => navigate("/myRequest")}>My Request</p>
-          <p>Invoice</p>
+          <p onClick={() => navigate("/*")}>Invoice</p>
         </div>
       </section>
       {/* mid Section  */}

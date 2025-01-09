@@ -4,6 +4,7 @@ import styles from "./App.module.scss";
 import Navbar from "./components/navbar";
 import HomePage from "./components/pages/homepage";
 import MyRequest from "./components/pages/myRequest";
+import NotFound from "./components/pages/notFound";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/myRequest" element={<MyRequest />} />
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
     </BrowserRouter>

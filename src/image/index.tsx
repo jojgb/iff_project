@@ -46,17 +46,20 @@ export const HomeSection = () => {
 
 export const CartSection = (cartItemCount: number) => {
   return (
-    <div className="flex items-center space-x-3">
-      <div className="relative">
-        <div>{cartImage}</div>
-        {cartItemCount > 0 && (
-          <div className="absolute top-0 right-0 bg-red-200 text-red-500 text-xs font-bold rounded-full w-3 h-3 flex items-center justify-center">
-            {cartItemCount}
-          </div>
-        )}
+    <div>
+      <div className="flex items-center space-x-3">
+        <div className="relative">
+          <div>{cartImage}</div>
+          {cartItemCount > 0 && (
+            <div className="absolute top-0 right-0 bg-red-200 text-red-500 text-xs font-bold rounded-full w-3 h-3 flex items-center justify-center">
+              {cartItemCount}
+            </div>
+          )}
+        </div>
+        <div>Nisya Indah Putri</div>
+        <div>{arrowDownImage}</div>
       </div>
-      <div>Nisya Indah Putri</div>
-      <div>{arrowDownImage}</div>
+      <div className="text-sm text-left text-gray-500">GA Officer</div>
     </div>
   );
 };
