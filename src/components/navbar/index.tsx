@@ -9,52 +9,58 @@ import {
 import styles from "../../App.module.scss";
 import Drawer from "../drawer";
 import FinancialModal from "../modal/financialModal";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { removeSelectedFromCart, updateQuantity } from "../../redux/cartSlice";
 
 interface NavbarProps {
   className?: string;
   fontColor?: string;
 }
 
-const mockCartData = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: 19.99,
-    quantity: 2,
-    image:
-      "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//87/MTA-2733701/canon_canon-eos-750d-kamera-dslr_full05.jpg",
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    price: 9.99,
-    quantity: 1,
-    image:
-      "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/9/23/efb94525-5e38-498c-b361-391d006b70be.png",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 14.99,
-    quantity: 3,
-    image:
-      "https://i.pcmag.com/imagery/reviews/06MB2dd9IF24omR8kjqGL2v-4.fit_scale.size_1028x578.v1709768556.jpg",
-  },
-  {
-    id: 4,
-    name: "Product 4",
-    price: 14.99,
-    quantity: 2,
-    image:
-      "https://i.pcmag.com/imagery/reviews/06MB2dd9IF24omR8kjqGL2v-4.fit_scale.size_1028x578.v1709768556.jpg",
-  },
-];
+// const mockCartData = [
+//   {
+//     id: 1,
+//     name: "Product 1",
+//     price: 19.99,
+//     quantity: 2,
+//     image:
+//       "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//87/MTA-2733701/canon_canon-eos-750d-kamera-dslr_full05.jpg",
+//   },
+//   {
+//     id: 2,
+//     name: "Product 2",
+//     price: 9.99,
+//     quantity: 1,
+//     image:
+//       "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/9/23/efb94525-5e38-498c-b361-391d006b70be.png",
+//   },
+//   {
+//     id: 3,
+//     name: "Product 3",
+//     price: 14.99,
+//     quantity: 3,
+//     image:
+//       "https://i.pcmag.com/imagery/reviews/06MB2dd9IF24omR8kjqGL2v-4.fit_scale.size_1028x578.v1709768556.jpg",
+//   },
+//   {
+//     id: 4,
+//     name: "Product 4",
+//     price: 14.99,
+//     quantity: 2,
+//     image:
+//       "https://i.pcmag.com/imagery/reviews/06MB2dd9IF24omR8kjqGL2v-4.fit_scale.size_1028x578.v1709768556.jpg",
+//   },
+// ];
 
 const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
+  const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isFinancialModalOpen, setIsFinancialModalOpen] = useState(false);
-  const [cartData, setCartData] = useState(mockCartData);
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  // const [cartData, setCartData] = useState(mockCartData);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const carts = useSelector((state: RootState) => state.carts.items);
+  console.log({ carts });
 
   const toggleDrawer = () => {
     setIsDrawerOpen((prev) => !prev);
@@ -62,15 +68,15 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
 
   // Handle Select All
   const handleSelectAll = () => {
-    if (selectedItems.length === cartData.length) {
+    if (selectedItems.length === carts.length) {
       setSelectedItems([]); // Deselect all if already selected
     } else {
-      setSelectedItems(cartData.map((item) => item.id)); // Select all items
+      setSelectedItems(carts.map((item) => item.id)); // Select all items
     }
   };
 
   // Handle individual item selection
-  const handleSelectItem = (id: number) => {
+  const handleSelectItem = (id: string) => {
     setSelectedItems((prevSelected) =>
       prevSelected.includes(id)
         ? prevSelected.filter((itemId) => itemId !== id)
@@ -80,31 +86,44 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
 
   // Handle Delete selected items
   const handleDeleteSelected = () => {
-    setCartData((prevData) =>
-      prevData.filter((item) => !selectedItems.includes(item.id))
-    );
+    dispatch(removeSelectedFromCart(selectedItems)); // Delete from Redux
     setSelectedItems([]); // Clear selected items after deletion
   };
 
   // Handle increase and decrease quantity
   const handleQuantityChange = (
-    id: number,
+    id: string,
     action: "increase" | "decrease"
   ) => {
-    setCartData((prevData) =>
-      prevData.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity:
-                action === "increase"
-                  ? item.quantity + 1
-                  : Math.max(item.quantity - 1, 1),
-            }
-          : item
-      )
-    );
+    const item = carts.find((item) => item.id === id);
+    if (item) {
+      const newQuantity =
+        action === "increase"
+          ? item.quantity + 1
+          : Math.max(item.quantity - 1, 1);
+      dispatch(updateQuantity({ id, quantity: newQuantity })); // Update quantity in Redux
+    }
   };
+
+  // Handle increase and decrease quantity
+  // const handleQuantityChange = (
+  //   id: number,
+  //   action: "increase" | "decrease"
+  // ) => {
+  //   setCartData((prevData) =>
+  //     prevData.map((item) =>
+  //       item.id === id
+  //         ? {
+  //             ...item,
+  //             quantity:
+  //               action === "increase"
+  //                 ? item.quantity + 1
+  //                 : Math.max(item.quantity - 1, 1),
+  //           }
+  //         : item
+  //     )
+  //   );
+  // };
 
   useEffect(() => {
     if (isDrawerOpen) {
@@ -143,7 +162,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
       </nav>
       <Drawer isOpen={isDrawerOpen} onClose={toggleDrawer} width="w-[40%]">
         <div className="h-full overflow-auto pb-12">
-          {cartData.length === 0 ? (
+          {carts.length === 0 ? (
             <p>Your cart is empty.</p>
           ) : (
             <div>
@@ -152,7 +171,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
                 <div className="flex items-center">
                   <input
                     type="checkbox"
-                    checked={selectedItems.length === cartData.length}
+                    checked={selectedItems.length === carts.length}
                     onChange={handleSelectAll}
                     className={`${styles.checkbox} mr-8`}
                   />
@@ -172,7 +191,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
               </div>
 
               {/* List of Products */}
-              {cartData.map((item) => {
+              {carts.map((item) => {
                 return (
                   <div
                     key={item.id}
@@ -253,7 +272,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
               })}
               <div>
                 <div className={`${styles.productSelected} text-left`}>
-                  <span className="font-bold">{cartData.length}</span> Product
+                  <span className="font-bold">{carts.length}</span> Product
                   Selected
                 </div>
                 <div className="flex space-x-4 font-semibold mt-4">

@@ -5,14 +5,41 @@ import { setProducts } from "../../../../redux/productsSlice";
 import DropDownSortModal from "../../../modal/dropDownSortModal";
 import styles from "./periperal.module.scss";
 import { orangeCartImage } from "../../../../image";
-
+import { addToCart } from "../../../../redux/cartSlice";
+interface Product {
+  id: number | string;
+  name: string;
+  price: number | string;
+  image: string;
+  category: string;
+  vendor: string;
+}
 const Periperal: FunctionComponent = () => {
   const dispatch = useDispatch();
+
   const products = useSelector((state: RootState) => state.products.products);
+
+  const carts = useSelector((state: RootState) => state.carts);
+  console.log({ carts });
+
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
   const [selectedSortOption, setSelectedSortOption] =
     useState<string>("High price");
+
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const handleAddToCart = (product: Product) => {
+    dispatch(
+      addToCart({
+        id: String(product.id),
+        name: product.name,
+        price: Number(product.price),
+        image: product.image,
+        quantity: 1,
+      })
+    );
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -107,7 +134,10 @@ const Periperal: FunctionComponent = () => {
               <h3 className="font-semibold text-lg text-left mb-2">
                 {product.name}
               </h3>
-              <button className="text-orange-50 py-2 px-4 flex items-center justify-center bg-white">
+              <button
+                className="text-orange-50 py-2 px-4 flex items-center justify-center bg-white"
+                onClick={() => handleAddToCart(product)}
+              >
                 {orangeCartImage}
               </button>
             </div>
