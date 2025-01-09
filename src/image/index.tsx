@@ -5,6 +5,9 @@ import homeLogo from "../assets/home.png";
 import arrowDownLogo from "../assets/arrowdown.png";
 import orangeCartLogo from "../assets/orangeCart.png";
 import orangeDeleteLogo from "../assets/deleteOrange.png";
+import eyeLogo from "../assets/eye.png";
+import trashLogo from "../assets/trash.png";
+import downloadLogo from "../assets/download.png";
 
 export const iffImage = <img src={iffLogo} alt="IIF Logo" />;
 
@@ -22,6 +25,16 @@ export const orangeDeleteImage = (
   <img src={orangeDeleteLogo} alt="Delete" width="40" height="40" />
 );
 
+export const eyeImage = <img src={eyeLogo} alt="eye" width="40" height="40" />;
+
+export const trashImage = (
+  <img src={trashLogo} alt="trash" width="40" height="40" />
+);
+
+export const downloadImage = (
+  <img src={downloadLogo} alt="download" width="40" height="40" />
+);
+
 export const HomeSection = () => {
   return (
     <div className="flex items-center space-x-2 border border-orange-400 p-4 rounded-md">
@@ -31,10 +44,17 @@ export const HomeSection = () => {
   );
 };
 
-export const CartSection = () => {
+export const CartSection = (cartItemCount: number) => {
   return (
     <div className="flex items-center space-x-3">
-      <div>{cartImage}</div>
+      <div className="relative">
+        <div>{cartImage}</div>
+        {cartItemCount > 0 && (
+          <div className="absolute top-0 right-0 bg-red-200 text-red-500 text-xs font-bold rounded-full w-3 h-3 flex items-center justify-center">
+            {cartItemCount}
+          </div>
+        )}
+      </div>
       <div>Nisya Indah Putri</div>
       <div>{arrowDownImage}</div>
     </div>

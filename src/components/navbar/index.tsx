@@ -129,7 +129,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
           <div className="flex items-center space-x-4">
             <NavItem child={<HomeSection />} href="/" className={fontColor} />
             <NavItem
-              child={<CartSection />}
+              child={CartSection(carts.length)}
               className={`${fontColor} cursor-pointer`}
               onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                 e.preventDefault();

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../../../App.module.scss";
 import SendToVendorModal from "../../modal/sendToVendorModal";
 import { useState } from "react";
+import { eyeImage, trashImage } from "../../../image";
 const MyRequest = () => {
   const data = [
     {
@@ -99,15 +100,9 @@ const MyRequest = () => {
           {data.map((row) => (
             <tr key={row.id} className="text-center">
               <td className="border px-4 py-2 flex justify-center space-x-2">
-                <button className="p-2 bg-gray-100 rounded">👁️</button>
-                {row.status === "Approved" && (
-                  <button
-                    className="p-2 bg-orange-500 text-white rounded"
-                    onClick={() => setIsSendToVendorModalVisible(true)}
-                  >
-                    Send to Vendor
-                  </button>
-                )}
+                <div>{eyeImage}</div>
+                {row.status === "Rejected" && trashImage}
+                {row.status === "Approved" && trashImage}
               </td>
               <td className="p-2 border-2">
                 <div
@@ -131,6 +126,14 @@ const MyRequest = () => {
           ))}
         </tbody>
       </table>
+      <div className="flex justify-start mt-4">
+        <button
+          className="p-2 bg-orange-500 text-white rounded-md"
+          onClick={() => setIsSendToVendorModalVisible(true)}
+        >
+          Send to Vendor
+        </button>
+      </div>
       <SendToVendorModal
         isVisible={isSendToVendorModalVisible}
         onClose={() => setIsSendToVendorModalVisible(false)}
