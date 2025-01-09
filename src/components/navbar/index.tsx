@@ -18,7 +18,6 @@ interface NavbarProps {
   fontColor?: string;
 }
 
-// const mockCartData = [
 //   {
 //     id: 1,
 //     name: "Product 1",
@@ -55,10 +54,13 @@ interface NavbarProps {
 
 const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
   const dispatch = useDispatch();
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const [isFinancialModalOpen, setIsFinancialModalOpen] = useState(false);
-  // const [cartData, setCartData] = useState(mockCartData);
+
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
   const carts = useSelector((state: RootState) => state.carts.items);
   console.log({ carts });
 
@@ -69,13 +71,12 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
   // Handle Select All
   const handleSelectAll = () => {
     if (selectedItems.length === carts.length) {
-      setSelectedItems([]); // Deselect all if already selected
+      setSelectedItems([]);
     } else {
-      setSelectedItems(carts.map((item) => item.id)); // Select all items
+      setSelectedItems(carts.map((item) => item.id));
     }
   };
 
-  // Handle individual item selection
   const handleSelectItem = (id: string) => {
     setSelectedItems((prevSelected) =>
       prevSelected.includes(id)
@@ -84,13 +85,11 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
     );
   };
 
-  // Handle Delete selected items
   const handleDeleteSelected = () => {
-    dispatch(removeSelectedFromCart(selectedItems)); // Delete from Redux
-    setSelectedItems([]); // Clear selected items after deletion
+    dispatch(removeSelectedFromCart(selectedItems));
+    setSelectedItems([]);
   };
 
-  // Handle increase and decrease quantity
   const handleQuantityChange = (
     id: string,
     action: "increase" | "decrease"
@@ -104,26 +103,6 @@ const Navbar: FunctionComponent<NavbarProps> = ({ className, fontColor }) => {
       dispatch(updateQuantity({ id, quantity: newQuantity })); // Update quantity in Redux
     }
   };
-
-  // Handle increase and decrease quantity
-  // const handleQuantityChange = (
-  //   id: number,
-  //   action: "increase" | "decrease"
-  // ) => {
-  //   setCartData((prevData) =>
-  //     prevData.map((item) =>
-  //       item.id === id
-  //         ? {
-  //             ...item,
-  //             quantity:
-  //               action === "increase"
-  //                 ? item.quantity + 1
-  //                 : Math.max(item.quantity - 1, 1),
-  //           }
-  //         : item
-  //     )
-  //   );
-  // };
 
   useEffect(() => {
     if (isDrawerOpen) {

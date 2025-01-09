@@ -17,6 +17,8 @@ interface Product {
 const Periperal: FunctionComponent = () => {
   const dispatch = useDispatch();
 
+  const [cartMessage, setCartMessage] = useState<string | null>(null);
+
   const products = useSelector((state: RootState) => state.products.products);
 
   const carts = useSelector((state: RootState) => state.carts);
@@ -39,6 +41,12 @@ const Periperal: FunctionComponent = () => {
         quantity: 1,
       })
     );
+
+    setCartMessage(`${product.name} added to cart!`);
+
+    setTimeout(() => {
+      setCartMessage(null);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -92,6 +100,15 @@ const Periperal: FunctionComponent = () => {
 
   return (
     <div>
+      {/* cart message  */}
+      <div
+        className={`${
+          cartMessage ? "visible" : "invisible"
+        } fixed top-16 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded transition-opacity`}
+      >
+        {cartMessage}
+      </div>
+
       {/* Sub Category Section */}
       <div className="flex gap-4 mb-6 items-start">
         <button className={styles.subCategory}>Device</button>
