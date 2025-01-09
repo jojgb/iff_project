@@ -55,7 +55,7 @@ const FixedAssetNumberModal: FunctionComponent<FixedAssetNumberModalProps> = ({
     <div className={styles.modalBackdrop} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div>
-          <h2 className="text-left">ACCOUNT TYPE</h2>
+          <h2 className="text-left">FIXED ASSET NUMBER</h2>
 
           {/* Input Search */}
           <input

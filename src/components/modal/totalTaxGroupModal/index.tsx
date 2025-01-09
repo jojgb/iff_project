@@ -1,14 +1,14 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import styles from "../dropdownModal.module.scss";
-import { budgetAccountOption } from "../../../constant";
+import { taxGroupOption } from "../../../constant";
 
-interface BudgetAccountModalProps {
+interface TotalTaxGroupModalProps {
   isVisible: boolean;
   onClose: () => void;
   onApply?: (category: string) => void;
 }
 
-const BudgetAccountModal: FunctionComponent<BudgetAccountModalProps> = ({
+const TotalTaxGroupModal: FunctionComponent<TotalTaxGroupModalProps> = ({
   isVisible,
   onClose,
   onApply,
@@ -16,7 +16,7 @@ const BudgetAccountModal: FunctionComponent<BudgetAccountModalProps> = ({
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredOptions, setFilteredOptions] =
-    useState<string[]>(budgetAccountOption);
+    useState<string[]>(taxGroupOption);
 
   useEffect(() => {
     if (isVisible) {
@@ -33,7 +33,7 @@ const BudgetAccountModal: FunctionComponent<BudgetAccountModalProps> = ({
   useEffect(() => {
     // Filter opsi berdasarkan pencarian
     setFilteredOptions(
-      budgetAccountOption.filter((option) =>
+      taxGroupOption.filter((option) =>
         option.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
@@ -54,7 +54,7 @@ const BudgetAccountModal: FunctionComponent<BudgetAccountModalProps> = ({
     <div className={styles.modalBackdrop} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div>
-          <h2 className="text-left">BUDGET ACCOUNT</h2>
+          <h2 className="text-left">TAX GROUP</h2>
 
           {/* Input Search */}
           <input
@@ -94,4 +94,4 @@ const BudgetAccountModal: FunctionComponent<BudgetAccountModalProps> = ({
   );
 };
 
-export default BudgetAccountModal;
+export default TotalTaxGroupModal;

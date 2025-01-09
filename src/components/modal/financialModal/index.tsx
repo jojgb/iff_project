@@ -4,6 +4,7 @@ import AccountTypeModal from "../accountTypeModal";
 import { DropDownIcon } from "../../../image";
 import BudgetAccountModal from "../budgetAccountModal";
 import FixedAssetNumberModal from "../fixedAssetNumberModal";
+import TotalTaxGroupModal from "../totalTaxGroupModal";
 
 interface FinancialModalProps {
   isVisible: boolean;
@@ -30,6 +31,11 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
   const [isFixedAssetNumberModalVisible, setIsFixedAssetNumberModalVisible] =
     useState<boolean>(false);
   const [fixedAssetNumber, setFixedAssetNumber] = useState<string>("");
+
+  // total tax group
+  const [isTotalTaxModalVisible, setIsTotalTaxModalVisible] =
+    useState<boolean>(false);
+  const [totalTaxGroup, setTotalTaxGroup] = useState<string>("");
 
   const body = useMemo(() => {
     return {
@@ -159,17 +165,15 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
               >
                 Tax Group
               </label>
-              <select
-                id="taxGroup"
-                name="taxGroup"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              <button
+                className="border border-gray-300 rounded-md p-2 flex justify-between w-full bg-white"
+                onClick={() => setIsTotalTaxModalVisible(true)}
               >
-                <option value="">Select Tax Group</option>
-                <option value="vat">VAT</option>
-                <option value="salesTax">Sales Tax</option>
-                <option value="incomeTax">Income Tax</option>
-                <option value="other">Other</option>
-              </select>
+                <span className="text-sm">
+                  {totalTaxGroup ? totalTaxGroup : "Please Select"}
+                </span>
+                <DropDownIcon />
+              </button>
             </div>
             {/* total price  */}
             <div>
@@ -218,6 +222,13 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
         onClose={() => setIsFixedAssetNumberModalVisible(false)}
         onApply={(opt) => {
           setFixedAssetNumber(opt);
+        }}
+      />
+      <TotalTaxGroupModal
+        isVisible={isTotalTaxModalVisible}
+        onClose={() => setIsTotalTaxModalVisible(false)}
+        onApply={(opt) => {
+          setTotalTaxGroup(opt);
         }}
       />
     </div>
