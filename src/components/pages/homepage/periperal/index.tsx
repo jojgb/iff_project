@@ -21,6 +21,7 @@ const Periperal: FunctionComponent = () => {
 
   const [cartMessage, setCartMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true); // Tambahkan state untuk loading
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // Add error state
   const products = useSelector((state: RootState) => state.products.products);
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -48,14 +49,19 @@ const Periperal: FunctionComponent = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
+      setErrorMessage(null); // Reset the error message before the request
       try {
         const response = await fetch(
           "https://65519a4c5c69a7790328f2f2.mockapi.io/employee/listProduct"
         );
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
         const data = await response.json();
         dispatch(setProducts(data));
       } catch (error) {
-        console.error("Failed to fetch products:", error);
+        console.error("Error fetching products:", error);
+        setErrorMessage("Sorry, something went wrong. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -106,6 +112,13 @@ const Periperal: FunctionComponent = () => {
       >
         {cartMessage}
       </div>
+
+      {/* Error Message */}
+      {errorMessage && (
+        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded">
+          {errorMessage}
+        </div>
+      )}
 
       {/* Loading Indicator */}
       {isLoading ? (

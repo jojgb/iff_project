@@ -17,7 +17,6 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
 
   const handleCategoryClick = (category: string) => {
     setNeedSelected(category);
-    console.log(`Selected category: ${category}`);
   };
 
   const renderChildList = useMemo(() => {

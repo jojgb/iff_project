@@ -46,7 +46,6 @@ const MyRequest = () => {
   const carts = useSelector((state: RootState) => state.carts.items);
 
   const financialData = useSelector((state: RootState) => state.financial);
-  console.log({ financialData, filteredData, carts });
 
   const [isSendToVendorModalVisible, setIsSendToVendorModalVisible] =
     useState<boolean>(false);
