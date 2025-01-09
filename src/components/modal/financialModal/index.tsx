@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "../../modal/dropDownSortModal/modal.module.scss";
 import AccountTypeModal from "../accountTypeModal";
 import { DropDownIcon } from "../../../image";
+import BudgetAccountModal from "../budgetAccountModal";
+import FixedAssetNumberModal from "../fixedAssetNumberModal";
 
 interface FinancialModalProps {
   isVisible: boolean;
@@ -20,13 +22,19 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
   const [accountType, setAccountType] = useState<string>("");
 
   // budget account
-  //     const [isBudgetAccountModalVisible, setisBudgetAccountModalVisible] =
-  //     useState<boolean>(false);
-  //   const [budgetAccount, setBudgetAccount] = useState<string>("106101/OTHER RECEIVABLES");
+  const [isBudgetAccountModalVisible, setisBudgetAccountModalVisible] =
+    useState<boolean>(false);
+  const [budgetAccount, setBudgetAccount] = useState<string>("");
+
+  // fixed asset number
+  const [isFixedAssetNumberModalVisible, setIsFixedAssetNumberModalVisible] =
+    useState<boolean>(false);
+  const [fixedAssetNumber, setFixedAssetNumber] = useState<string>("");
 
   const body = useMemo(() => {
     return {
       accountType,
+      budgetAccount,
     };
   }, [accountType]);
 
@@ -115,17 +123,15 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
               >
                 Budget Account
               </label>
-              <select
-                id="budgetAccount"
-                name="budgetAccount"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              <button
+                className="border border-gray-300 rounded-md p-2 flex justify-between w-full bg-white"
+                onClick={() => setisBudgetAccountModalVisible(true)}
               >
-                <option value="">Select Budget Account</option>
-                <option value="marketing">Marketing</option>
-                <option value="operations">Operations</option>
-                <option value="hr">Human Resources</option>
-                <option value="it">IT</option>
-              </select>
+                <span className="text-sm">
+                  {budgetAccount ? budgetAccount : "Please Select"}
+                </span>
+                <DropDownIcon />
+              </button>
             </div>
             {/* fixed asset number  */}
             <div>
@@ -135,17 +141,15 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
               >
                 Fixed Asset Number
               </label>
-              <select
-                id="fixedAssetNumber"
-                name="fixedAssetNumber"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              <button
+                className="border border-gray-300 rounded-md p-2 flex justify-between w-full bg-white"
+                onClick={() => setIsFixedAssetNumberModalVisible(true)}
               >
-                <option value="">Select Fixed Asset Number</option>
-                <option value="fa001">FA001</option>
-                <option value="fa002">FA002</option>
-                <option value="fa003">FA003</option>
-                <option value="fa004">FA004</option>
-              </select>
+                <span className="text-sm">
+                  {fixedAssetNumber ? fixedAssetNumber : "Please Select"}
+                </span>
+                <DropDownIcon />
+              </button>
             </div>
             {/* tax group */}
             <div>
@@ -200,6 +204,20 @@ const FinancialModal: React.FC<FinancialModalProps> = ({
         onClose={() => setIsAccountTypeModalVisible(false)}
         onApply={(opt) => {
           setAccountType(opt);
+        }}
+      />
+      <BudgetAccountModal
+        isVisible={isBudgetAccountModalVisible}
+        onClose={() => setisBudgetAccountModalVisible(false)}
+        onApply={(opt) => {
+          setBudgetAccount(opt);
+        }}
+      />
+      <FixedAssetNumberModal
+        isVisible={isFixedAssetNumberModalVisible}
+        onClose={() => setIsFixedAssetNumberModalVisible(false)}
+        onApply={(opt) => {
+          setFixedAssetNumber(opt);
         }}
       />
     </div>
