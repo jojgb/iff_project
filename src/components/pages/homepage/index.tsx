@@ -5,12 +5,14 @@ import Periperal from "./periperal";
 import Printing from "./printing";
 import Stationary from "./stationary";
 import Merchandise from "./merchandise";
+import { useNavigate } from "react-router-dom";
 
 interface HomePageProps {
   className?: string;
 }
 
 const HomePage: FunctionComponent<HomePageProps> = () => {
+  const navigate = useNavigate();
   const [needSelected, setNeedSelected] = useState<string>("");
 
   const handleCategoryClick = (category: string) => {
@@ -37,9 +39,9 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
     <div>
       {/* tab section  */}
       <section className={styles.tabSection}>
-        <div className="flex justify-center items-center gap-4">
-          <p>Home</p>
-          <p>My Request</p>
+        <div className="flex justify-center items-center gap-4 cursor-pointer">
+          <p className={styles.tab}>Home</p>
+          <p onClick={() => navigate("/myRequest")}>My Request</p>
           <p>Invoice</p>
         </div>
       </section>

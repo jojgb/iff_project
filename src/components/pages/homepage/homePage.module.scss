@@ -1,5 +1,6 @@
 $font-color: #617170;
 $font-color-h1: #001e1d;
+$primary-color: #f58220;
 
 .tabSection {
   color: $font-color;
@@ -33,4 +34,7 @@ $font-color-h1: #001e1d;
   align-items: center;
   text-align: center;
   gap: 0.5rem;
+}
+.tab {
+  color: $primary-color;
 }
