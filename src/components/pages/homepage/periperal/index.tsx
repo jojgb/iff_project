@@ -156,7 +156,7 @@ const Periperal: FunctionComponent = () => {
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-4 gap-6 pb-12">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-12">
             {sortedProducts.map((product) => (
               <div
                 key={product.id}
